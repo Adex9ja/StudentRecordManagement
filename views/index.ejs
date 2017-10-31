@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  
+<head>
+	<meta charset="UTF-8">
+	<title>Student Management System</title>
+	  
+	<!---CDN Links-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script> 
+	<style type="text/css" rel="stylesheet">
+		.marginleft{margin-left: 10px}
+	</style> 
+	</head>
+<body>
+	<div class="page-wrapper">
+		<div class="row">
+			<nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
+		       <ul class="nav navbar-nav">
+		      		<li class="active"><a href="/">Student Record Management</a></li>
+		       </ul>
+			</nav>
+		</div>
+		<div class="row jumbotron">
+			<div class="col-md-10 col-md-offset-1">
+					<button class="btn btn-primary" onclick="addNewStudent()">+ Add New Student</button>
+			</div>
+			<div class="col-md-10 col-md-offset-1 table-responsive">
+						<table class="table table-hover table-striped">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Surname</th>
+									<th>First Name</th>									
+									<th>Phone Number</th>
+									<th>Email Address</th>
+									<th>Address</th>
+									<th>Gender</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody id="students">								
+								
+							</tbody>
+						</table>						
+					</div>
+			
+		</div>
+	</div>
+	<form method="post" action="/students/view" class="hidden" id="view"><input type="text" name="id" id="viewid"/> </form>
+	<form method="post" action="/students/viewedit" class="hidden" id="edit"><input type="text" name="id" id="editid"/> </form>
+
+	<script type="text/javascript">
+		function addNewStudent(){
+			window.location = "addstudent";
+		}
+		function view(studId){
+			$('#viewid').val(studId);
+			$('form#view').submit();
+		}
+		function edit(studId){
+			$('#editid').val(studId);
+			$('form#edit').submit();
+		}
+		function deleteStudent(studId){			
+			$.ajax({ type: 'POST', url: '/students/delete/', data : {id : studId} }).done(function(data){
+            	if(data == "00"){
+            		window.location.reload();
+            	}
+            	else
+            		alert(data);
+            });
+		}
+		
+		$(document).ready(function(){
+				$.ajax({ type: 'POST', url: '/students' }).done(function(data){
+		    		$.each(data, function (index, item) {
+                        $('#students').append(
+                        			'<tr>' +
+                        			'<td>'+ (index + 1) +'</td>' +
+									'<td>'+ item.sname +'</td>' +
+									'<td>'+ item.fname +'</td>' +
+									'<td>'+ item.phoneno +'</td>' +
+									'<td>'+ item.email +'</td>' +
+									'<td>'+ item.address +'</td>' +
+									'<td>'+ item.gender +'</td>' +									
+									'<td>' +
+										'<button class="btn btn-info marginleft" onclick="view('+item.id+')">View</button>' + 
+										'<button class="btn btn-warning marginleft" onclick="edit('+item.id+')">Edit</button>' +
+										'<button class="btn btn-danger marginleft" onclick="deleteStudent('+item.id+')">Delete</button>' +
+									'</td>' +
+									'</tr>'
+                        	);                        
+                    });
+		    	});
+
+		});
+
+
+	</script>
+</body>
+</html>

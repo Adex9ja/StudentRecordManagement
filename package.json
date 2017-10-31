@@ -1,0 +1,32 @@
+{
+  "name": "schoolmanagementsystem",
+  "version": "1.0.0",
+  "description": "this is a node.js app required for a test so as to be enrolled on a scholarship program",
+  "main": "website.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node website.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adex9ja/AndelaNodejsApp.git"
+  },
+  "keywords": [
+    "school",
+    "management",
+    "system",
+    "andela",
+    "node.js"
+  ],
+  "author": "Adeyemo Adeolu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Adex9ja/AndelaNodejsApp/issues"
+  },
+  "homepage": "https://github.com/Adex9ja/AndelaNodejsApp#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "pg": "^6.1.0",
+    "website": "^0.1.1"
+  }
+}
